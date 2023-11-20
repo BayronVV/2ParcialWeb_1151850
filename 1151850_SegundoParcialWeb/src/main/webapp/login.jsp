@@ -1,51 +1,99 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styling/style.css">
-    <title>Login Page</title>
+<meta charset="UTF-8">
+<title>Login</title>
+<style>
+    body {
+        background-color: #f2f2f2;
+    }
+    h1 {
+        text-align: center;
+        color: #4CAF50;
+    }
+    form {
+        border: 3px solid #f1f1f1;
+        margin: 0 auto;
+        width: 50%;
+        padding: 20px;
+        background-color: white;
+    }
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+    button:hover {
+        opacity: 0.8;
+    }
+    .cancelbtn {
+        width: auto;
+        padding: 10px 18px;
+        background-color: #f44336;
+    }
+    .imgcontainer {
+        text-align: center;
+        margin: 24px 0 12px 0;
+    }
+    img.avatar {
+        width: 40%;
+        border-radius: 50%;
+    }
+    .container {
+        padding: 16px;
+    }
+    span.psw {
+        float: right;
+        padding-top: 16px;
+    }
+    /* Change styles for span and cancel button on extra small screens */
+    @media screen and (max-width: 300px) {
+        span.psw {
+            display: block;
+            float: none;
+        }
+        .cancelbtn {
+            width: 100%;
+        }
+    }
+</style>
 </head>
-
 <body>
-    <h1>Login Form</h1>
-    <% 
-        // this makes the previous page out of the cached pages.
-        response.setHeader("Cache-control","no-cache, no-store, must-revalidate");
-        
-        String username=(String) session.getAttribute("Username");
-        // before asking for credentials, check the session.
-        if(username!=null){
-            session.setAttribute("Username", username);
-            response.sendRedirect("home_user.jsp");
-            return;
-        }
-        else{
-            System.out.println("Login page(session): "+username);
-        }
+    <h1>Login</h1>
+    <form action="login" method="post">
+        <div class="imgcontainer">
+            <img src="avatar.png" alt="Avatar" class="avatar">
+        </div>
+        <div class="container">
+            <label for="username"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username" required>
 
-        // check for any cookies.
-        Cookie[] cookies = request.getCookies();
-        if(cookies!=null){
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals("Username")){
-                    username = cookie.getValue();
-                    System.out.println("Login page(cookie): "+username);
-                    break;
-                }
-            }
-        }
-        if(username!=null){
-            response.sendRedirect("home_user.jsp");
-            // https://stackoverflow.com/questions/2123514/java-lang-illegalstateexception-cannot-forward-sendredirect-create-session
-            return;
-        }
-    %>
-    <form action="./success" method="POST">
-        <label for="Username">Enter Username: </label>
-        <input type="text" name="Username" id="Username" autocomplete="off"><br><br>
-        <label for="Password">Enter Password: </label>
-        <input type="password" name="Password" id="Password"><br><br>
-        <input type="submit" value="Login Using HttpSession" name="button">
-        <input type="submit" value="Login Using Cookies" name="button">
+            <label for="password"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" required>
+
+            <button type="submit">Login</button>
+            <label>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+        </div>
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" class="cancelbtn">Cancel</button>
+            <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
     </form>
 </body>
+</html>
